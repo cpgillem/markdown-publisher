@@ -14,6 +14,7 @@ from markdown to one of the following formats:
 
 import mistune
 import pdfkit
+
 def from_file(filename):
     ''' Gets the text from a file. If the file isn't found, return an empty 
         string. '''

@@ -14,6 +14,7 @@ from markdown to one of the following formats:
 
 import mistune
 import pdfkit
+import os
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -45,23 +46,58 @@ def to_file(source, filename):
 
 def md_to_html(source_md, source_css=""):
     ''' Basic function for getting the HTML source for a string. 
-		If some css is given, adds that to the beginning as a <style> tag. '''
+        If some css is given, adds that to the beginning as a <style> tag. '''
     html_output = mistune.markdown(source_md)
-	if len(source_css > 0):
-		html_output = css_to_html_tag + html_output
+    if len(source_css) > 0:
+        html_output = css_to_html_tag(source_css) + html_output
 
-	return html_output
+    return html_output
 
 def css_to_html_tag(source_css):
     ''' Gets an HTML tag for inline CSS formatting from some basic CSS. '''
     return '<style type="text/css">%s</style>' % source_css
 
-def html_to_pdf_file(source_html, output_html_filename, source_css_filename):
+def html_to_pdf_file(source_html, output_pdf_filename, source_css_filename):
     ''' Writes HTML/CSS to a PDF file. 
         Uses one CSS file for simplicity. This is passed on as a single item 
-        list. '''
-    pdfkit.from_string(source_html, output_html_filename, css=source_css_filename)
+        list. 
+        The path given for the PDF is returned. '''
+    pdfkit.from_string(source_html, output_pdf_filename, 
+        css=source_css_filename)
 
-def html_to_email(source_html, attachments=[]):
-	''' Puts HTML (assuming with inline CSS if necessary) into an email message. '''
-	
+    return output_pdf_filename
+
+def md_to_html_email(source_md, source_css=""):
+    ''' Puts HTML (assuming with inline CSS if necessary) into an email 
+        message object. You will need to add subject, sender, and recipient 
+        information to the email object before sending with smtplib. '''
+
+    # Create multipart/alternative message.
+    message = MIMEMultipart('alternative')
+    
+    # Create the parts of the email.
+    email_part_plain = MIMEText(source_md, 'plain')
+    email_part_html = MIMEText(md_to_html(source_md, source_css), 'html')
+
+    # Attach the parts. The last one will be preferred.
+    message.attach(email_part_plain)
+    message.attach(email_part_html)
+
+    # Return a flattened email message string for use with smtplib.
+    return message
+
+def pdf_file_to_pdf_attachment(source_pdf_filename):
+    ''' Takes a path to a PDF file and creates an attachment for an email
+        message. '''
+
+    # Open the PDF in binary mode.
+    with open(source_pdf_filename, 'rb') as pdf_file:
+        # Create a PDF message.
+        pdf_attachment = MIMEBase('application', 'pdf')
+        pdf_attachment.set_payload(pdf_file.read())
+        encoders.encode_base64(pdf_attachment)
+        pdf_attachment.add_header('Content-Disposition', 'attachment',
+            filename=os.path.basename(source_pdf_filename))
+        # Return the attachment for an email message possibly generated from
+            # md_to_html_email.
+        return email_message

@@ -3,3 +3,7 @@
 
 # Files from open programs
 *.swp
+
+# Test files
+test_pdf.pdf
+test_css.css

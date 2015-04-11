@@ -4,9 +4,8 @@
 # Files from open programs
 *.swp
 
-# Test files
-test_pdf.pdf
-test_css.css
+# Test files.
+test/*
 
 # OSX
 .DS_Store

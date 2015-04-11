@@ -1,6 +1,6 @@
 # Markdown Publisher for CCaWMU
 
-This is a little project to provide automated publishing capabilities for the Computer Club at WMU as well as anyoneelse interested. The goals of this module in order:
+This is a little project to provide automated publishing capabilities for the Computer Club at WMU as well as anyone else interested. The goals of this module in order:
 
 1. Provide professional and aesthetically pleasing publications for CCaWMU
 1. Allow these publications to take on any form (PDF, email, blog post, etc.)

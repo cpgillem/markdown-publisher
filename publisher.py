@@ -39,10 +39,17 @@ def to_file(source, filename):
     except:
         print "Could not write to %s." % filename
 
-def md_to_html(source):
+def md_to_html(source_md):
     ''' Basic function for getting the HTML source for a string. '''
-    return mistune.markdown(source)
+    return mistune.markdown(source_md)
 
-def html_to_pdf_file(source, output_filename):
-    ''' Writes HTML/CSS to a PDF file. '''
-    print pdfkit.from_string(source, output_filename)
+def md_and_css_to_html(source_md, source_css):
+    ''' Gets HTML with inline CSS formatting from Markdown and a CSS file. '''
+    return '<style type="text/css">%s</style>%s' % (source_css, 
+        md_to_html(source_md))
+
+def html_to_pdf_file(source, output_filename, css_filename):
+    ''' Writes HTML/CSS to a PDF file. 
+        Uses one CSS file for simplicity. This is passed on as a single item 
+        list. '''
+    pdfkit.from_string(source, output_filename, css=css_filename)

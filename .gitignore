@@ -1,0 +1,5 @@
+# Python compiled files
+*.py[cod]
+
+# Files from open programs
+*.swp

@@ -15,6 +15,8 @@ This is a little project to provide automated publishing capabilities for the Co
 
 # Design Decisions
 
+*Once the project is ready to use, this will be replaced with an API reference.*
+
 ## publisher module
 
 This module provides functions for reading and writing text from files and converting that text across formats.

@@ -24,7 +24,6 @@ This module provides functions for reading and writing text from files and conve
 ### Features
 - Functions for reading and writing to files
 - Functions for converting syntaxes
-- Batch processing support
 
 ### Functions
 
@@ -34,8 +33,6 @@ This module provides functions for reading and writing text from files and conve
 - Reading text from a file
 - Converting a markdown string to an HTML string 
 - Converting a markdown string to an HTML string with inline CSS
-  - This will use a custom mistune Renderer.
   - This will be used in emails.
 - Converting an HTML string and a CSS file to PDF
   - This should also take advantage of a TOC and other metadata.
-- Converting a list of markdown files into an RSS XML feed

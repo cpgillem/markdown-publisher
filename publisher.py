@@ -4,7 +4,7 @@
 Computer Club of WMU Markdown Publishing System
 by cpg
 
-This is a package that can be used to process any computer club documentation 
+This is a module that can be used to process any computer club documentation 
 from markdown to one of the following formats:
 - HTML with simple, built-in CSS
 - Plain HTML
@@ -14,12 +14,7 @@ from markdown to one of the following formats:
 
 import mistune
 import pdfkit
-
-def get_html(source, css=""):
-    ''' Basic function for getting the HTML source for a string. '''
-    return mistune.markdown(source)
-
-def get_text_from_file(filename):
+def from_file(filename):
     ''' Gets the text from a file. If the file isn't found, return an empty 
         string. '''
 
@@ -36,7 +31,7 @@ def get_text_from_file(filename):
 
     return source
 
-def write_text_to_file(source, filename):
+def to_file(source, filename):
     ''' Writes given text to a file. '''
     try:
         with open(filename, 'w') as destination_file:
@@ -44,6 +39,10 @@ def write_text_to_file(source, filename):
     except:
         print "Could not write to %s." % filename
 
-def write_html_to_pdf(source, output_filename):
+def md_to_html(source):
+    ''' Basic function for getting the HTML source for a string. '''
+    return mistune.markdown(source)
+
+def html_to_pdf_file(source, output_filename):
     ''' Writes HTML/CSS to a PDF file. '''
     print pdfkit.from_string(source, output_filename)

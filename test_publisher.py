@@ -4,6 +4,8 @@ test_pdf_filename = "test/test.pdf"
 test_css_filename = "test/test.css"
 test_md_filename = "test/test.md"
 test_html_filename = "test/test.html"
+test_sender = "cpg@yakko.cs.wmich.edu"
+test_recipient = "cpgillem@gmail.com"
 
 test_md = "# Test heading\n\n- test item 1\n- test item 2"
 
@@ -23,4 +25,10 @@ def from_md_file_to_pdf_file():
     test_html = publisher.md_to_html(publisher.from_file("README.md"))
     print publisher.html_to_pdf_file(test_html, test_pdf_filename, [test_css_filename])
 
-md_and_css_to_html()
+def from_md_to_html_email():
+    test_email = publisher.md_to_html_email(publisher.from_file(test_md_filename), 
+        publisher.from_file(test_css_filename))
+    print test_email
+
+# The test case currently in use
+from_md_to_html_email()

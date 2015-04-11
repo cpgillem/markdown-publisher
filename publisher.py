@@ -48,8 +48,8 @@ def md_and_css_to_html(source_md, source_css):
     return '<style type="text/css">%s</style>%s' % (source_css, 
         md_to_html(source_md))
 
-def html_to_pdf_file(source, output_filename, css_filename):
+def html_to_pdf_file(source_html, output_html_filename, source_css_filename):
     ''' Writes HTML/CSS to a PDF file. 
         Uses one CSS file for simplicity. This is passed on as a single item 
         list. '''
-    pdfkit.from_string(source, output_filename, css=css_filename)
+    pdfkit.from_string(source_html, output_html_filename, css=source_css_filename)

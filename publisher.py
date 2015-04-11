@@ -15,6 +15,9 @@ from markdown to one of the following formats:
 import mistune
 import pdfkit
 
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 def from_file(filename):
     ''' Gets the text from a file. If the file isn't found, return an empty 
         string. '''
@@ -40,17 +43,25 @@ def to_file(source, filename):
     except:
         print "Could not write to %s." % filename
 
-def md_to_html(source_md):
-    ''' Basic function for getting the HTML source for a string. '''
-    return mistune.markdown(source_md)
+def md_to_html(source_md, source_css=""):
+    ''' Basic function for getting the HTML source for a string. 
+		If some css is given, adds that to the beginning as a <style> tag. '''
+    html_output = mistune.markdown(source_md)
+	if len(source_css > 0):
+		html_output = css_to_html_tag + html_output
 
-def md_and_css_to_html(source_md, source_css):
-    ''' Gets HTML with inline CSS formatting from Markdown and a CSS file. '''
-    return '<style type="text/css">%s</style>%s' % (source_css, 
-        md_to_html(source_md))
+	return html_output
+
+def css_to_html_tag(source_css):
+    ''' Gets an HTML tag for inline CSS formatting from some basic CSS. '''
+    return '<style type="text/css">%s</style>' % source_css
 
 def html_to_pdf_file(source_html, output_html_filename, source_css_filename):
     ''' Writes HTML/CSS to a PDF file. 
         Uses one CSS file for simplicity. This is passed on as a single item 
         list. '''
     pdfkit.from_string(source_html, output_html_filename, css=source_css_filename)
+
+def html_to_email(source_html, attachments=[]):
+	''' Puts HTML (assuming with inline CSS if necessary) into an email message. '''
+	

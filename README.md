@@ -36,3 +36,6 @@ This module provides functions for reading and writing text from files and conve
   - This will be used in emails.
 - Converting an HTML string and a CSS file to PDF
   - This should also take advantage of a TOC and other metadata.
+- Converting an HTML string with inline CSS to an email message
+  - Offering an alternate text message
+- Preparing a text email message

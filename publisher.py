@@ -13,8 +13,9 @@ from markdown to one of the following formats:
 '''
 
 import mistune
+import pdfkit
 
-def get_html(source=""):
+def get_html(source, css=""):
     ''' Basic function for getting the HTML source for a string. '''
     return mistune.markdown(source)
 
@@ -42,3 +43,7 @@ def write_text_to_file(source, filename):
             destination_file.write(source)
     except:
         print "Could not write to %s." % filename
+
+def write_html_to_pdf(source, output_filename):
+    ''' Writes HTML/CSS to a PDF file. '''
+    print pdfkit.from_string(source, output_filename)

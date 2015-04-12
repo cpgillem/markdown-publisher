@@ -57,13 +57,16 @@ def css_to_html_tag(source_css):
     ''' Gets an HTML tag for inline CSS formatting from some basic CSS. '''
     return '<style type="text/css">%s</style>' % source_css
 
-def html_to_pdf_file(source_html, output_pdf_filename, source_css_filename):
+def html_to_pdf_file(source_html, output_pdf_filename, source_css_filename=None):
     ''' Writes HTML/CSS to a PDF file. 
         Uses one CSS file for simplicity. This is passed on as a single item 
         list. 
         The path given for the PDF is returned. '''
-    pdfkit.from_string(source_html, output_pdf_filename, 
-        css=source_css_filename)
+    if source_css_filename is not None:
+        pdfkit.from_string(source_html, output_pdf_filename, 
+            css=source_css_filename)
+    else:
+        pdfkit.from_string(source_html, output_pdf_filename)
 
     return output_pdf_filename
 

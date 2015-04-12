@@ -44,14 +44,15 @@ def to_file(source, filename):
     except:
         print "Could not write to %s." % filename
 
-def md_to_html(source_md, source_css=""):
-    ''' Basic function for getting the HTML source for a string. 
-        If some css is given, adds that to the beginning as a <style> tag. '''
-    html_output = mistune.markdown(source_md)
-    if len(source_css) > 0:
-        html_output = css_to_html_tag(source_css) + html_output
+def md_to_html(source_md):
+    ''' Basic function for getting the HTML source for a string. '''
+    return mistune.markdown(source_md)
 
-    return html_output
+def md_to_html_document(source_md, source_css=None):
+    ''' Turns Markdown syntax and CSS into an HTML document. This is useful 
+        for sending emails. '''
+    return '<!DOCTYPE html>\n<html>%s<body>%s</body></html>'
+        % (md_to_html(source_md), get_html_head(source_css=source_css))
 
 def css_to_html_tag(source_css):
     ''' Gets an HTML tag for inline CSS formatting from some basic CSS. '''
@@ -68,8 +69,7 @@ def html_to_pdf_file(source_html, output_pdf_filename, source_css_filename=None)
     else:
         pdfkit.from_string(source_html, output_pdf_filename)
 
-    return output_pdf_filename
-
+    return output_pdf_filename 
 def md_to_html_email(source_md, source_css=""):
     ''' Puts HTML (assuming with inline CSS if necessary) into an email 
         message object. You will need to add subject, sender, and recipient 
@@ -80,7 +80,7 @@ def md_to_html_email(source_md, source_css=""):
     
     # Create the parts of the email.
     email_part_plain = MIMEText(source_md, 'plain')
-    email_part_html = MIMEText(md_to_html(source_md, source_css), 'html')
+    email_part_html = MIMEText(md_to_html_document(source_md, source_css), 'html')
 
     # Attach the parts. The last one will be preferred.
     message.attach(email_part_plain)
@@ -104,3 +104,9 @@ def pdf_file_to_pdf_attachment(source_pdf_filename):
         # Return the attachment for an email message possibly generated from
             # md_to_html_email.
         return email_message
+
+def get_html_head(title="", source_css=None):
+    ''' Create an HTML head given some parameters. '''
+    # Return a head tag. If there is CSS, make a style tag.
+    return '<head>\n<title>%s</title>\n%s</head>' 
+        % (title, css_to_html_tag(source_css) if source_css is not None else "")

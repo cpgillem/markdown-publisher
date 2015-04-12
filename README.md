@@ -32,5 +32,5 @@ This is a little project to provide automated publishing capabilities for the Co
   - **source_css_filename**: Filename of the CSS source file if it is necessary. If not specified, the PDF will be plain HTML.
 - function **md_to_html_email(source_md, source_css)**: Creates an HTML email out of markdown source with optional CSS formatting. This function will create a Python email object with a MIME HTML attachment as well as a plaintext attachment containing the original Markdown, as a fallback. **returns a Python MIMEMultipart object.**
   - **source_md**: Markdown source to put in the email.
-  - **source_css**: CSS to apply to the HTML document. This will be embedded into the page.
+  - **source_css**: CSS to apply to the HTML document. This will be embedded into the page. **Optional**. If not specified, there will be no CSS.
 - function **pdf_file_to_pdf_attachment(source_pdf_filename)**: Creates a Python MIMEBase object out of an existing PDF file for attaching to emails. This object will be sent as a PDF attachment. **returns a Python MIMEBase object.**

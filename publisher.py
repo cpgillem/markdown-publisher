@@ -108,5 +108,4 @@ def pdf_file_to_pdf_attachment(source_pdf_filename):
 def get_html_head(title="", source_css=None):
     ''' Create an HTML head given some parameters. '''
     # Return a head tag. If there is CSS, make a style tag.
-    return '<head>\n<title>%s</title>\n%s</head>' 
-        % (title, css_to_html_tag(source_css) if source_css is not None else "")
+    return '<head>\n<title>%s</title>\n%s</head>' % (title, css_to_html_tag(source_css) if source_css is not None else "")

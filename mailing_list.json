@@ -1,0 +1,12 @@
+{
+    "mailing_list": [
+        { 
+            "email": "cpgillem@gmail.com",
+            "subscriptions": [ "meetings", "plan", "officers", "newsletters" ]
+        },
+        {
+            "email": "cpg@yakko.cs.wmich.edu",
+            "subscriptions": [ "meetings", "officers" ]
+        }
+    ]
+}
